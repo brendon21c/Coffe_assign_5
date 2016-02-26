@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -12,7 +14,7 @@ public class Main {
 
         try {
 
-
+            Scanner scanner1 = new Scanner(System.in);
             BufferedReader importFile = new BufferedReader(new FileReader("coffee.txt"));
 
             String line = importFile.readLine();
@@ -20,6 +22,7 @@ public class Main {
             String[] temp = null;
             HashMap<String, Double> drinkCost = new HashMap<String, Double>(); // This is for the stores cost
             HashMap<String, Double> drinkCharge = new HashMap<String, Double>(); //  This is what they charge
+            LinkedList drinkList = new LinkedList();
             LinkedList sold = new LinkedList();
             LinkedList expenses = new LinkedList();
             LinkedList revenue = new LinkedList();
@@ -45,10 +48,29 @@ public class Main {
 
             }
 
-            for (int x = 0 ; x < drinkCost.size() ; x++) {
+            for (String key : drinkCost.keySet() ) {
 
-                String drink =
+                String drink = key;
+                drinkList.add(drink);
+                //System.out.println("Please enter how may " + drink + "'s were sold: ");
 
+                while (true) { // This will verify input for units sold (whole numbers check)
+                    System.out.println("Please enter how may " + drink + "'s were sold: ");
+                    String test = scanner1.next();
+
+                    try {
+                        int input = Integer.parseInt(test);
+                        sold.add(input);
+                        break;
+
+                    } catch (NumberFormatException NFE) {
+                        System.out.println("That is not a correct entry");
+
+                    }
+
+                }
+
+                System.out.println(drinkCost[]);
             }
 
 
