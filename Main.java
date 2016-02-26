@@ -3,6 +3,9 @@ package com.Brendon;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
@@ -10,12 +13,13 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 
         try {
 
             Scanner scanner1 = new Scanner(System.in);
             BufferedReader importFile = new BufferedReader(new FileReader("coffee.txt"));
+
 
             String line = importFile.readLine();
 
@@ -26,7 +30,7 @@ public class Main {
             LinkedList sold = new LinkedList();
             LinkedList expenses = new LinkedList();
             LinkedList revenue = new LinkedList();
-            LinkedList prifts = new LinkedList();
+            LinkedList profits = new LinkedList();
 
 
             /*
@@ -41,14 +45,14 @@ public class Main {
                 String temp2 = temp[2];
                 Double wholeCost = Double.parseDouble(temp1);
                 Double custCost = Double.parseDouble(temp2);
-                drinkCost.put(drink,wholeCost);
-                drinkCharge.put(drink,custCost);
+                drinkCost.put(drink, wholeCost);
+                drinkCharge.put(drink, custCost);
 
                 line = importFile.readLine();
 
             }
 
-            for (String key : drinkCost.keySet() ) {
+            for (String key : drinkCost.keySet()) {
 
                 String drink = key;
                 drinkList.add(drink);
@@ -69,21 +73,28 @@ public class Main {
                     }
 
                 }
-
-                System.out.println(drinkCost[]);
             }
+            /*
+            I know I could string fromat the decimal but I found this on stacksocial and wanted
+            to try it.
+             */
+            NumberFormat round = DecimalFormat.getInstance();
+            round.getMinimumFractionDigits(2);
+            round.getMaximumFractionDigits(2);
+            round.setRoundingMode(RoundingMode.DOWN);
+
 
 
 
             importFile.close();
-
-
-        }
-        catch (IOException IOE) {
-
-            System.out.println("no file found");
-            System.out.println(IOE);
         }
 
+
+            catch(IOException IOE){
+
+                System.out.println("no file found");
+                System.out.println(IOE);
+            }
+
+        }
     }
-}
