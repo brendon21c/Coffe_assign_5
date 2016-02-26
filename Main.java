@@ -28,9 +28,9 @@ public class Main {
             HashMap<String, Double> drinkCharge = new HashMap<String, Double>(); //  This is what they charge
             LinkedList drinkList = new LinkedList();
             LinkedList sold = new LinkedList();
-            LinkedList expenses = new LinkedList();
-            LinkedList revenue = new LinkedList();
-            LinkedList profits = new LinkedList();
+            LinkedList<Double> expenses = new LinkedList<Double>();
+            LinkedList<Double> revenue = new LinkedList<Double>();
+            LinkedList<Double> profits = new LinkedList<Double>();
 
 
             /*
@@ -55,7 +55,7 @@ public class Main {
             for (String key : drinkCost.keySet()) {
 
                 String drink = key;
-                drinkList.add(drink);
+                drinkList.add(drink); // adds drinks name
                 //System.out.println("Please enter how may " + drink + "'s were sold: ");
 
                 while (true) { // This will verify input for units sold (whole numbers check)
@@ -63,7 +63,7 @@ public class Main {
                     String test = scanner1.next();
 
                     try {
-                        int input = Integer.parseInt(test);
+                        int input = Integer.parseInt(test); // adds number sold
                         sold.add(input);
                         break;
 
@@ -74,14 +74,54 @@ public class Main {
 
                 }
             }
-            /*
-            I know I could string fromat the decimal but I found this on stacksocial and wanted
-            to try it.
-             */
-            NumberFormat round = DecimalFormat.getInstance();
-            round.getMinimumFractionDigits(2);
-            round.getMaximumFractionDigits(2);
-            round.setRoundingMode(RoundingMode.DOWN);
+
+            // this block adds up the expenses for each drink.
+            for (int x = 0 ; x < drinkList.size(); x++) {
+
+                String drinkTemp = drinkList.get(x).toString();
+                Double drinkCostTemp = drinkCost.get(drinkTemp);
+                int soldTemp = Integer.parseInt(sold.get(x).toString());
+                Double drinkCostExpense = drinkCostTemp * soldTemp;
+                String drinkCostExpense2 = String.format("%.2f", drinkCostExpense);
+                Double drinkCostExpense3 = Double.valueOf(drinkCostExpense2);
+                expenses.add(drinkCostExpense3);
+
+            }
+
+            // This block adds up the revenues from sales.
+            for (int x = 0 ; x < drinkList.size(); x++) {
+
+                String drinkTemp = drinkList.get(x).toString();
+                Double drinkCostTemp = drinkCharge.get(drinkTemp);
+                int chargeTemp = Integer.parseInt(sold.get(x).toString());
+                Double drinkCharge1 = drinkCostTemp * chargeTemp;
+                String drinkCharge2 = String.format("%.2f", drinkCharge1);
+                Double drinkCharge3 = Double.valueOf(drinkCharge2);
+                revenue.add(drinkCharge3);
+
+            }
+
+            // This adds ptofits to it's list.
+            for (int x = 0 ; x < drinkList.size() ; x++) {
+
+                Double rev = revenue.get(x);
+                Double exp = expenses.get(x);
+
+                Double profit = rev - exp;
+                String profit2 = String.format("%.2f", profit);
+                Double profit3 = Double.valueOf(profit2);
+                profits.add(profit3);
+
+            }
+
+            for (int x = 0 ; x < drinkList.size() ; x++) {
+
+                System.out.println(drinkList.get(x) + ": Sold " + sold.get(x) + ", Expenses $" +
+                expenses.get(x) + ", Revenue $" + revenue.get(x) + ", Profit $" + profits.get(x));
+
+            }
+
+
 
 
 
