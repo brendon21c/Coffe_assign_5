@@ -1,8 +1,8 @@
 package com.Brendon;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
+
+import java.io.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -27,7 +27,7 @@ public class Main {
             HashMap<String, Double> drinkCost = new HashMap<String, Double>(); // This is for the stores cost
             HashMap<String, Double> drinkCharge = new HashMap<String, Double>(); //  This is what they charge
             LinkedList drinkList = new LinkedList();
-            LinkedList sold = new LinkedList();
+            LinkedList<Integer> sold = new LinkedList<Integer>();
             LinkedList<Double> expenses = new LinkedList<Double>();
             LinkedList<Double> revenue = new LinkedList<Double>();
             LinkedList<Double> profits = new LinkedList<Double>();
@@ -114,19 +114,42 @@ public class Main {
 
             }
 
-            for (int x = 0 ; x < drinkList.size() ; x++) {
+            // Totals for the day.
+            int soldTotal = 0;
+            Double expTotal = 0.00;
+            Double revTotal = 0.00;
+            Double profitTotal = 0.00;
 
-                System.out.println(drinkList.get(x) + ": Sold " + sold.get(x) + ", Expenses $" +
-                expenses.get(x) + ", Revenue $" + revenue.get(x) + ", Profit $" + profits.get(x));
+            for (int x = 0 ; x < drinkList.size() ; x++) { // calculating totals
+
+                soldTotal += sold.get(x);
+                expTotal += expenses.get(x);
+                revTotal += revenue.get(x);
+                profitTotal += profits.get(x);
 
             }
 
+            FileWriter writer = new FileWriter("sales-report.txt", false);
+            BufferedWriter writer2 = new BufferedWriter(writer);
 
 
 
+
+            for (int x = 0 ; x < drinkList.size() ; x++) {
+
+                writer2.write(drinkList.get(x) + ": Sold " + sold.get(x) + ", Expenses $" +
+                expenses.get(x) + ", Revenue $" + revenue.get(x) + ", Profit $" + profits.get(x) + "\n");
+
+            }
+
+            writer2.write("\n");
+
+            writer2.write("Totals: Sold: " + soldTotal + ", Expenses: $" + String.format("%.2f", expTotal) +
+            ", Revenue $" + String.format("%.2f",revTotal) + ", Profits $" + String.format("%.2f",profitTotal));
 
 
             importFile.close();
+            writer2.close();
         }
 
 
