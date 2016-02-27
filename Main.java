@@ -129,6 +129,7 @@ public class Main {
 
             }
 
+            // This section creates a new file based on User input
             FileWriter writer = new FileWriter("sales-report.txt", false);
             BufferedWriter writer2 = new BufferedWriter(writer);
 
