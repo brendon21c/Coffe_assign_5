@@ -135,7 +135,7 @@ public class Main {
 
 
 
-
+            //writting the main block
             for (int x = 0 ; x < drinkList.size() ; x++) {
 
                 writer2.write(drinkList.get(x) + ": Sold " + sold.get(x) + ", Expenses $" +
